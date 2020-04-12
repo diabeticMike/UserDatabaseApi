@@ -31,5 +31,4 @@ func main() {
 	}
 	defer db.Close()
 	db.SetMode(mgo.Monotonic, true)
-
 }
