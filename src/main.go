@@ -1,11 +1,12 @@
 package main
 
 import (
-	basicLog "log"
-
-	"github.com/UserDatabaseApi/src/logger"
+	baseLog "log"
 
 	"github.com/UserDatabaseApi/src/config"
+	"github.com/UserDatabaseApi/src/infrastructure/datastore"
+	"github.com/UserDatabaseApi/src/logger"
+	"github.com/globalsign/mgo"
 )
 
 func main() {
@@ -17,12 +18,18 @@ func main() {
 	)
 
 	if err, Config = config.Load(configFilePath); err != nil {
-		basicLog.Fatal(err)
+		baseLog.Fatal(err)
 	}
 
 	if err, log = logger.Load(Config.Log); err != nil {
-		basicLog.Fatal(err)
+		baseLog.Fatal(err)
 	}
 
-	log.Error("Kolya lisiy")
+	db, err := datastore.NewDB(Config.MongoURL)
+	if err != nil {
+		log.Errorf("Incorrect db connection, err: %s", err.Error())
+	}
+	defer db.Close()
+	db.SetMode(mgo.Monotonic, true)
+
 }

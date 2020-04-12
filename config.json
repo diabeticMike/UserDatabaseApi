@@ -1,5 +1,5 @@
 {
-  "MongoURL": "mongo",
+  "MongoURL": "localhost:27100",
   "ListenURL": "localhost:8080",
   "Log" : {
     "Level": 2,
