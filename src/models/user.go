@@ -11,3 +11,8 @@ type User struct {
 	Gender    string        `json:"gender" bson:"gender"`
 	BirthDate string        `json:"birth_date" bson:"birth_date"`
 }
+
+type UserStats struct {
+	GamesCount int  `json:"games_count"`
+	UserInfo   User `json:"user_info"`
+}

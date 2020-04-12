@@ -4,6 +4,8 @@ import (
 	baseLog "log"
 	"net/http"
 
+	"github.com/UserDatabaseApi/src/interface/helper"
+
 	"github.com/UserDatabaseApi/src/infrastructure/router"
 
 	"github.com/gorilla/handlers"
@@ -49,6 +51,7 @@ func main() {
 		interactor.NewUserInteractor(
 			repository.NewUserRepository(db, Config.DatabaseName),
 		),
+		helper.NewUserHelper(),
 	)
 	mainRouter := mux.NewRouter().StrictSlash(true)
 	router.ApplyUserRoutes(mainRouter.PathPrefix("/users").Subrouter(), userController)
