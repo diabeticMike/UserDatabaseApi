@@ -1,3 +1,9 @@
 {
-
+  "MongoURL": "mongo",
+  "ListenURL": "localhost:8080",
+  "Log" : {
+    "Level": 2,
+    "ServiceName": "dbApi",
+    "FileName": "./src/logs/apiService.log"
+  }
 }
