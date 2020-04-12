@@ -10,9 +10,10 @@ import (
 type (
 	// Configuration is struct for holding service's configuration info
 	Configuration struct {
-		MongoURL  string       `json:"MongoURL" validate:"required"`
-		ListenURL string       `json:"ListenURL" validate:"required"`
-		Log       LoggerConfig `json:"Log" validate:"required"`
+		MongoURL     string       `json:"MongoURL" validate:"required"`
+		DatabaseName string       `json:"DatabaseName" validate"required"`
+		ListenPort   string       `json:"ListenPort" validate:"required"`
+		Log          LoggerConfig `json:"Log" validate:"required"`
 	}
 
 	// LoggerConfig is a struct for holding logger configuration

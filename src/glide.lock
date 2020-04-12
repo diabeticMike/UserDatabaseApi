@@ -1,5 +1,5 @@
 hash: 722a2a6a619935dbd600b5c279ea173f3974167364bc7f84210247f5abca865e
-updated: 2020-04-12T10:40:01.543936961+03:00
+updated: 2020-04-12T11:59:26.31469796+03:00
 imports:
 - name: github.com/globalsign/mgo
   version: eeefdecb41b842af6dc652aaea4026e8403e62df
@@ -8,6 +8,10 @@ imports:
   - internal/json
   - internal/sasl
   - internal/scram
+- name: github.com/gorilla/handlers
+  version: f08afc1876ad882db8074bcb8a4cc96107d3a5f4
+- name: github.com/gorilla/mux
+  version: 75dcda0896e109a2a22c9315bca3bb21b87b2ba5
 - name: github.com/konsorten/go-windows-terminal-sequences
   version: f55edac94c9bbba5d6182a4be46d86a2c9b5b50e
 - name: github.com/sirupsen/logrus
