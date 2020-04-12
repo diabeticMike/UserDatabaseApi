@@ -1,0 +1,33 @@
+hash: 722a2a6a619935dbd600b5c279ea173f3974167364bc7f84210247f5abca865e
+updated: 2020-04-12T10:40:01.543936961+03:00
+imports:
+- name: github.com/globalsign/mgo
+  version: eeefdecb41b842af6dc652aaea4026e8403e62df
+  subpackages:
+  - bson
+  - internal/json
+  - internal/sasl
+  - internal/scram
+- name: github.com/konsorten/go-windows-terminal-sequences
+  version: f55edac94c9bbba5d6182a4be46d86a2c9b5b50e
+- name: github.com/sirupsen/logrus
+  version: d417be0fe654de640a82370515129985b407c7e3
+- name: golang.org/x/sys
+  version: 59c9f1ba88faf592b225274f69c5ef1e4ebacf82
+  subpackages:
+  - unix
+testImports:
+- name: github.com/davecgh/go-spew
+  version: d8f796af33cc11cb798c1aaeb27a4ebc5099927d
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: 5d4384ee4fb2527b0a1256a821ebfc92f91efefc
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: 3ebf1ddaeb260c4b1ae502a01c7844fa8c1fa0e9
+  subpackages:
+  - assert
+- name: gopkg.in/yaml.v2
+  version: 53403b58ad1b561927d19068c655246f2db79d48
