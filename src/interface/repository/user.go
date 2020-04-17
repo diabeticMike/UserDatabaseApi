@@ -17,11 +17,12 @@ func NewUserRepository(db *mgo.Session, databaseName string) UserRepository {
 // UserRepository is interface for user entity
 type UserRepository interface {
 	FindUserByID(id bson.ObjectId) (*models.User, error)
+	InsertUsers(users []models.User) error
+	InsertUser(user models.User) error
 }
 
 // FindUserByID find user by id
 func (ur *userRepository) FindUserByID(id bson.ObjectId) (*models.User, error) {
-
 	var user models.User
 
 	err := ur.users.FindId(id).One(&user)
@@ -30,4 +31,24 @@ func (ur *userRepository) FindUserByID(id bson.ObjectId) (*models.User, error) {
 	}
 
 	return &user, nil
+}
+
+// InsertUsers create user objects inside db
+func (ur *userRepository) InsertUsers(users []models.User) error {
+	for _, u := range users {
+		if err := ur.users.Insert(u); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// InsertUser create user object inside db
+func (ur *userRepository) InsertUser(user models.User) error {
+	if err := ur.users.Insert(user); err != nil {
+		return err
+	}
+
+	return nil
 }

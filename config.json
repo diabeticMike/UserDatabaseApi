@@ -2,6 +2,10 @@
   "MongoURL": "localhost:27100",
   "DatabaseName": "userDB",
   "ListenPort": ":8080",
+  "SeedsFilePaths": {
+    "Users": "./src/seeds/source/users.json",
+    "UserGames": "./src/seeds/source/userGames.json"
+  },
   "Log" : {
     "Level": 2,
     "ServiceName": "dbApi",

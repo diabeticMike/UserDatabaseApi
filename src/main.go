@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	baseLog "log"
 	"net/http"
+
+	"github.com/UserDatabaseApi/src/seeds"
 
 	"github.com/UserDatabaseApi/src/interface/helper"
 
@@ -47,12 +50,25 @@ func main() {
 	defer db.Close()
 	db.SetMode(mgo.Monotonic, true)
 
+	userRepository := repository.NewUserRepository(db, Config.DatabaseName)
+	userGameRepository := repository.NewUserGameRepository(db, Config.DatabaseName)
 	userController := controller.NewUserController(
 		interactor.NewUserInteractor(
-			repository.NewUserRepository(db, Config.DatabaseName),
+			userRepository,
+			userGameRepository,
 		),
 		helper.NewUserHelper(),
 	)
+
+	fmt.Println(Config)
+	if users, err := seeds.RunUserSeeds(userRepository, Config.SeedsFilePaths.Users); err != nil {
+		log.Fatalf("Error while providing user seeds, err: %s", err.Error())
+	} else {
+		if err := seeds.RunUserGamesSeeds(userGameRepository, users, Config.SeedsFilePaths.UserGames); err != nil {
+			log.Fatalf("Error while providing userGames seeds, err: %s", err.Error())
+		}
+	}
+
 	mainRouter := mux.NewRouter().StrictSlash(true)
 	router.ApplyUserRoutes(mainRouter.PathPrefix("/users").Subrouter(), userController)
 

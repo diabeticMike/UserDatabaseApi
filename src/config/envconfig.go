@@ -10,10 +10,11 @@ import (
 type (
 	// Configuration is struct for holding service's configuration info
 	Configuration struct {
-		MongoURL     string       `json:"MongoURL" validate:"required"`
-		DatabaseName string       `json:"DatabaseName" validate"required"`
-		ListenPort   string       `json:"ListenPort" validate:"required"`
-		Log          LoggerConfig `json:"Log" validate:"required"`
+		MongoURL       string       `json:"MongoURL" validate:"required"`
+		DatabaseName   string       `json:"DatabaseName" validate:"required"`
+		ListenPort     string       `json:"ListenPort" validate:"required"`
+		SeedsFilePaths Seeds        `json:"SeedsFilePaths" validate:"required"`
+		Log            LoggerConfig `json:"Log" validate:"required"`
 	}
 
 	// LoggerConfig is a struct for holding logger configuration
@@ -21,6 +22,11 @@ type (
 		Level       uint32 `json:"Level" validate:"required"`
 		ServiceName string `json:"ServiceName" validate:"required"`
 		FileName    string `json:"FileName" validate:"required"`
+	}
+
+	Seeds struct {
+		Users     string `json:"Users" validate:"required"`
+		UserGames string `json:"UserGames" validate:"required"`
 	}
 )
 
