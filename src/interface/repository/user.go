@@ -17,6 +17,7 @@ func NewUserRepository(db *mgo.Session, databaseName string) UserRepository {
 // UserRepository is interface for user entity
 type UserRepository interface {
 	FindUserByID(id bson.ObjectId) (*models.User, error)
+	FindUser(incomingUser models.User) (*models.User, error)
 	InsertUsers(users []models.User) error
 	InsertUser(user models.User) error
 }
@@ -26,6 +27,22 @@ func (ur *userRepository) FindUserByID(id bson.ObjectId) (*models.User, error) {
 	var user models.User
 
 	err := ur.users.FindId(id).One(&user)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+// FindUser find user by parameters except id
+func (ur *userRepository) FindUser(incomingUser models.User) (*models.User, error) {
+	var user models.User
+	err := ur.users.Find(bson.M{"email": incomingUser.Email,
+		"last_name":  incomingUser.LastName,
+		"country":    incomingUser.Country,
+		"city":       incomingUser.City,
+		"gender":     incomingUser.Gender,
+		"birth_date": incomingUser.BirthDate}).One(&user)
 	if err != nil {
 		return nil, err
 	}

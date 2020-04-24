@@ -18,6 +18,7 @@ func NewUserGameRepository(db *mgo.Session, databaseName string) UserGameReposit
 type UserGameRepository interface {
 	FindUserGameByID(id bson.ObjectId) (*models.UserGame, error)
 	InsertUserGames(userGames []models.UserGame) error
+	InsertUserGame(userGame models.UserGame) error
 }
 
 // FindUserGameByID find userGame by id
@@ -34,11 +35,19 @@ func (ugr *userGameRepository) FindUserGameByID(id bson.ObjectId) (*models.UserG
 
 // InsertUserGames create userGame objects inside db
 func (ugr *userGameRepository) InsertUserGames(userGames []models.UserGame) error {
-	for _, u := range userGames {
-		u.ID = bson.NewObjectId()
-		if err := ugr.userGames.Insert(u); err != nil {
+	for _, ug := range userGames {
+		if err := ugr.userGames.Insert(ug); err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+// InsertUserGame create userGame object inside db
+func (ugr *userGameRepository) InsertUserGame(userGame models.UserGame) error {
+	if err := ugr.userGames.Insert(userGame); err != nil {
+		return err
 	}
 
 	return nil
