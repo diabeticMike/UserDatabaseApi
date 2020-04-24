@@ -52,6 +52,7 @@ func main() {
 
 	userRepository := repository.NewUserRepository(db, Config.DatabaseName)
 	userGameRepository := repository.NewUserGameRepository(db, Config.DatabaseName)
+	gameRepository := repository.NewGameRepository(db, Config.DatabaseName)
 	userController := controller.NewUserController(
 		interactor.NewUserInteractor(
 			userRepository,
@@ -61,12 +62,25 @@ func main() {
 	)
 
 	fmt.Println(Config)
-	if users, err := seeds.RunUserSeeds(userRepository, Config.SeedsFilePaths.Users); err != nil {
-		log.Fatalf("Error while providing user seeds, err: %s", err.Error())
-	} else {
-		if err := seeds.RunUserGamesSeeds(userGameRepository, users, Config.SeedsFilePaths.UserGames); err != nil {
-			log.Fatalf("Error while providing userGames seeds, err: %s", err.Error())
+	if Config.WithSeeds {
+		fmt.Println("Running seeds in process")
+		// Setting up user's seeds
+		users, err := seeds.RunUserSeeds(userRepository, Config.SeedsFilePaths.Users)
+		if err != nil {
+			log.Error("Error while providing user seeds, err: %s", err.Error())
 		}
+
+		// Setting up game's seeds
+		games, err := seeds.RunGameSeeds(gameRepository, Config.SeedsFilePaths.UserGames)
+		if err != nil {
+			log.Error("Error while providing userGames seeds, err: %s", err.Error())
+		}
+
+		// Setting up userGames seeds
+		if err = seeds.RunUserGameSeeds(userGameRepository, users, games, Config.UserGamesCount); err != nil {
+			log.Error("Error while providing userGames seeds, err: %s", err.Error())
+		}
+		fmt.Println("Running seeds done")
 	}
 
 	mainRouter := mux.NewRouter().StrictSlash(true)
