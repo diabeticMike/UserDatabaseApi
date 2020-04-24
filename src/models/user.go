@@ -1,6 +1,10 @@
 package models
 
-import "github.com/globalsign/mgo/bson"
+import (
+	"time"
+
+	"github.com/globalsign/mgo/bson"
+)
 
 type User struct {
 	ID        bson.ObjectId `json:"-" bson:"_id"`
@@ -9,7 +13,7 @@ type User struct {
 	Country   string        `json:"country" bson:"country"`
 	City      string        `json:"city" bson:"city"`
 	Gender    string        `json:"gender" bson:"gender"`
-	BirthDate string        `json:"birth_date" bson:"birth_date"`
+	BirthDate time.Time     `json:"birth_date" bson:"birth_date"`
 }
 
 type UserStats struct {
