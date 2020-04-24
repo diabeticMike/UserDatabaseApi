@@ -18,6 +18,7 @@ func NewGameRepository(db *mgo.Session, databaseName string) GameRepository {
 type GameRepository interface {
 	FindGameByID(id bson.ObjectId) (*models.Game, error)
 	FindGame(game models.Game) (*models.Game, error)
+	FindGamesSortedByCreated() ([]models.Game, error)
 	InsertGames(games []models.Game) error
 	InsertGame(game models.Game) error
 }
@@ -66,4 +67,15 @@ func (gr *gameRepository) FindGame(incomingGame models.Game) (*models.Game, erro
 	}
 
 	return &game, nil
+}
+
+// FindGameSortedByCreated find games sorted by created time
+func (gr *gameRepository) FindGamesSortedByCreated() ([]models.Game, error) {
+	var games []models.Game
+	err := gr.games.Find(bson.M{}).Limit(100).Sort("created").All(&games)
+	if err != nil {
+		return nil, err
+	}
+
+	return games, nil
 }

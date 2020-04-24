@@ -60,10 +60,11 @@ func main() {
 		),
 		helper.NewUserHelper(),
 	)
+	gameController := controller.NewGameController(interactor.NewGameInteractor(gameRepository), helper.NewGameHelper())
 
 	fmt.Println(Config)
 	if Config.WithSeeds {
-		fmt.Println("Running seeds in process")
+		log.Infoln("Running seeds in process")
 		// Setting up user's seeds
 		users, err := seeds.RunUserSeeds(userRepository, Config.SeedsFilePaths.Users)
 		if err != nil {
@@ -80,11 +81,12 @@ func main() {
 		if err = seeds.RunUserGameSeeds(userGameRepository, users, games, Config.UserGamesCount); err != nil {
 			log.Error("Error while providing userGames seeds, err: %s", err.Error())
 		}
-		fmt.Println("Running seeds done")
+		log.Infoln("Running seeds done")
 	}
 
 	mainRouter := mux.NewRouter().StrictSlash(true)
 	router.ApplyUserRoutes(mainRouter.PathPrefix("/users").Subrouter(), userController)
+	router.ApplyGameRoutes(mainRouter.PathPrefix("/games").Subrouter(), gameController)
 
 	headers := handlers.AllowedHeaders([]string{"Content-Type", "Authorization"})
 	methods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"})

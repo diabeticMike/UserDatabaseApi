@@ -18,6 +18,7 @@ func NewUserRepository(db *mgo.Session, databaseName string) UserRepository {
 type UserRepository interface {
 	FindUserByID(id bson.ObjectId) (*models.User, error)
 	FindUser(incomingUser models.User) (*models.User, error)
+	FindAllUsers() ([]models.User, error)
 	InsertUsers(users []models.User) error
 	InsertUser(user models.User) error
 }
@@ -48,6 +49,17 @@ func (ur *userRepository) FindUser(incomingUser models.User) (*models.User, erro
 	}
 
 	return &user, nil
+}
+
+// FindAllUsers find all users
+func (ur *userRepository) FindAllUsers() ([]models.User, error) {
+	var users []models.User
+	err := ur.users.Find(bson.M{}).Limit(100).All(&users)
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }
 
 // InsertUsers create user objects inside db

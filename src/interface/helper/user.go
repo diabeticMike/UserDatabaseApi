@@ -9,14 +9,14 @@ import (
 type userHelper struct{}
 
 type UserHelper interface {
-	MarshalAllUsers(users []models.User) ([]byte, error)
+	MarshalAllUsersStats(users []models.UserStats) ([]byte, error)
 }
 
 func NewUserHelper() UserHelper {
 	return &userHelper{}
 }
 
-func (*userHelper) MarshalAllUsers(users []models.User) ([]byte, error) {
+func (*userHelper) MarshalAllUsersStats(users []models.UserStats) ([]byte, error) {
 	resp, err := json.Marshal(users)
 	if err != nil {
 		return nil, err

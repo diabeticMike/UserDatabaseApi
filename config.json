@@ -7,10 +7,10 @@
     "UserGames": "./src/seeds/source/games.json"
   },
   "Log" : {
-    "Level": 2,
+    "Level": 6,
     "ServiceName": "dbApi",
     "FileName": "./src/logs/apiService.log"
   },
-  "UserGamesCount" : 5000,
-  "WithSeeds" : true
+  "UserGamesCount" : 100,
+  "WithSeeds" : false
 }

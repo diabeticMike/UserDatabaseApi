@@ -17,6 +17,7 @@ func NewUserGameRepository(db *mgo.Session, databaseName string) UserGameReposit
 // UserGamesRepository is interface for userGames entity
 type UserGameRepository interface {
 	FindUserGameByID(id bson.ObjectId) (*models.UserGame, error)
+	FindAllUserGames() ([]models.UserGame, error)
 	InsertUserGames(userGames []models.UserGame) error
 	InsertUserGame(userGame models.UserGame) error
 }
@@ -31,6 +32,17 @@ func (ugr *userGameRepository) FindUserGameByID(id bson.ObjectId) (*models.UserG
 	}
 
 	return &userGame, nil
+}
+
+// FindAllUserGames find all userGames
+func (ugr *userGameRepository) FindAllUserGames() ([]models.UserGame, error) {
+	var userGames []models.UserGame
+	err := ugr.userGames.Find(bson.M{}).All(&userGames)
+	if err != nil {
+		return nil, err
+	}
+
+	return userGames, nil
 }
 
 // InsertUserGames create userGame objects inside db
