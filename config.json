@@ -4,11 +4,13 @@
   "ListenPort": ":8080",
   "SeedsFilePaths": {
     "Users": "./src/seeds/source/users.json",
-    "UserGames": "./src/seeds/source/userGames.json"
+    "UserGames": "./src/seeds/source/games.json"
   },
   "Log" : {
     "Level": 2,
     "ServiceName": "dbApi",
     "FileName": "./src/logs/apiService.log"
-  }
+  },
+  "UserGamesCount" : 5000,
+  "WithSeeds" : true
 }
