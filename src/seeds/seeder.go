@@ -111,7 +111,7 @@ func RunUserGameSeeds(ugr repository.UserGameRepository, users []models.User, ga
 	if games == nil {
 		return errors.New("there is no games to make userGame seed")
 	}
-	for i, user := range users {
+	for _, user := range users {
 		var userGame models.UserGame
 		userGame.ID = bson.NewObjectId()
 		userGame.UserID = user.ID
