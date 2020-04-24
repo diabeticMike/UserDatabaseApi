@@ -15,6 +15,8 @@ type (
 		ListenPort     string       `json:"ListenPort" validate:"required"`
 		SeedsFilePaths Seeds        `json:"SeedsFilePaths" validate:"required"`
 		Log            LoggerConfig `json:"Log" validate:"required"`
+		UserGamesCount int          `json:"UserGamesCount", validate:"required"`
+		WithSeeds      bool         `json:"WithSeeds", validate:"required"`
 	}
 
 	// LoggerConfig is a struct for holding logger configuration
